@@ -1,0 +1,525 @@
+/* ==========================================================================
+   Kapsa Tree - Custom Styling & Accordion Layout
+   ========================================================================== */
+
+:root {
+  --primary-bg: #342435;
+  --primary-hover: #48334a;
+  --accent-color: #8b5cf6;
+  --bg-light: #f4f4f7;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Setup */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header Component */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  padding: 0 24px;
+  background-color: var(--primary-bg);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Global Button Styles */
+button, 
+.btn {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-header {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-header:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary {
+  background-color: var(--primary-bg);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+
+.btn-outline:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+/* Main Container */
+.main {
+  min-height: calc(100vh - 64px);
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Search Controls */
+.searchbar {
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchbar input {
+  width: 100%;
+  padding: 12px 16px 12px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.searchbar input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+/* ==========================================================================
+   iPhone Photos Style Accordion / Sibling Carousel
+   ========================================================================== */
+
+.accordion-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 30px 10px;
+  overflow-x: auto;
+  perspective: 1000px;
+  scroll-behavior: smooth;
+}
+
+/* Sibling Side Card (Collapsed / Secondary view) */
+.card-sibling {
+  flex: 0 0 160px;
+  height: 220px;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 0.7;
+  transform: scale(0.88);
+  cursor: pointer;
+  transition: transform var(--transition-normal), opacity var(--transition-normal), box-shadow var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  user-select: none;
+}
+
+.card-sibling:hover {
+  opacity: 0.95;
+  transform: scale(0.93);
+  box-shadow: var(--shadow-md);
+}
+
+.card-sibling .picture-thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #e5e7eb;
+  margin-bottom: 12px;
+}
+
+.card-sibling .sibling-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Main Active Focused Card */
+.card-main {
+  flex: 0 0 360px;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--primary-bg);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.05);
+  z-index: 10;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.picture {
+  width: 100%;
+  height: 180px;
+  background-color: #e5e7eb;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person-name {
+  font-size: 1.35rem;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.person-name strong {
+  color: var(--primary-bg);
+  font-weight: 800;
+}
+
+/* Relations Section Links */
+.relations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.relations p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.relations a {
+  color: var(--primary-bg);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(52, 36, 53, 0.3);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.relations a:hover {
+  color: var(--accent-color);
+  border-bottom-style: solid;
+}
+
+/* Quick Action Bar */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Forms & Modals */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  border-color: var(--primary-bg);
+}
+
+/* Custom Horizontal Scrollbars */
+.accordion-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.accordion-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.accordion-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.accordion-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==========================================================================
+   Mobile-Optimized Touch Styling (Append or replace in App.css)
+   ========================================================================== */
+
+/* Touch-friendly Base Enhancements */
+html {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Header Adjustments for Mobile */
+@media (max-width: 640px) {
+  .header {
+    padding: 0 12px;
+    height: 56px;
+  }
+
+  .header-title {
+    font-size: 1.1rem;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  /* Compact header buttons for touch */
+  .btn-header {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    min-height: 40px;
+  }
+
+  .main {
+    padding: 12px 8px;
+  }
+}
+
+/* Touch-optimized Input & Search */
+.searchbar input {
+  font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+  min-height: 44px;
+}
+
+/* ==========================================================================
+   Touch Carousel / Sibling Accordion Mobile Snap
+   ========================================================================== */
+
+.accordion-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 16px 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  
+  /* Touch Snap Mechanics */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  
+  /* Scrollbar removal for native feel on mobile */
+  scrollbar-width: none; /* Firefox */
+}
+
+.accordion-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Mobile Side Sibling Cards */
+.card-sibling {
+  scroll-snap-align: center;
+  flex: 0 0 130px;
+  height: 190px;
+  padding: 10px;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.card-sibling:active {
+  transform: scale(0.92);
+  opacity: 0.8;
+}
+
+.card-sibling .picture-thumb {
+  width: 56px;
+  height: 56px;
+}
+
+/* Mobile Focused Card */
+.card-main {
+  scroll-snap-align: center;
+  flex: 0 0 calc(85vw - 24px);
+  max-width: 380px;
+  padding: 16px;
+  transform: scale(1);
+}
+
+.picture {
+  height: 150px;
+}
+
+/* Touch-Friendly Relation Links & Action Buttons */
+.relations p {
+  padding: 4px 0;
+}
+
+.relations a {
+  display: inline-block;
+  padding: 4px 6px;
+  margin: 2px 0;
+  background-color: rgba(52, 36, 53, 0.05);
+  border-radius: var(--radius-sm);
+  min-height: 36px;
+  line-height: 28px;
+}
+
+.relations a:active {
+  background-color: var(--primary-bg);
+  color: #ffffff;
+}
+
+.card-actions {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-actions button,
+.card-actions input[type="submit"] {
+  flex: 1;
+  min-height: 44px; /* Minimum Apple/Google tap target height */
+  font-size: 0.9rem;
+}
+
+/* Mobile Bottom Sheet Modal */
+@media (max-width: 640px) {
+  .modal-overlay {
+    align-items: flex-end; /* Slides up from bottom on mobile */
+  }
+
+  .modal-content {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px 16px 28px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    min-height: 44px;
+  }
+}
